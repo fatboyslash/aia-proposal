@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>章燕 · 友邦利享年年（2025）个人养老金计划书</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-pale: #F7EDD3;
+      --ink: #1A1208;
+      --ink-mid: #3D2E0D;
+      --ink-soft: #6B5A3A;
+      --cream: #FAF6EE;
+      --cream-dark: #F0E8D5;
+      --red-accent: #C0392B;
+      --white: #FFFFFF;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Noto Serif SC', serif;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* ============ HERO COVER ============ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      background: linear-gradient(145deg, #1A1208 0%, #2C1F0A 40%, #1A1208 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.18) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(201,168,76,0.06)' stroke-width='0.5'%3E%3Ccircle cx='60' cy='60' r='50'/%3E%3Ccircle cx='60' cy='60' r='35'/%3E%3Ccircle cx='60' cy='60' r='20'/%3E%3Cline x1='10' y1='60' x2='110' y2='60'/%3E%3Cline x1='60' y1='10' x2='60' y2='110'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 100% 100%, 120px 120px;
+    }
+
+    .hero-deco-left, .hero-deco-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 200px;
+      opacity: 0.15;
+    }
+    .hero-deco-left { left: 40px; }
+    .hero-deco-right { right: 40px; transform: translateY(-50%) scaleX(-1); }
+
+    .hero-inner {
+      position: relative;
+      text-align: center;
+      z-index: 2;
+      animation: fadeUp 1.2s ease both;
+      padding: 0 20px;
+    }
+
+    .hero-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      letter-spacing: 6px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      opacity: 0.85;
+    }
+
+    .hero-name {
+      font-size: clamp(52px, 9vw, 90px);
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: 12px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .hero-name span {
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 4px;
+      margin-bottom: 50px;
+    }
+
+    .hero-divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 32px;
+    }
+
+    .hero-product {
+      font-size: clamp(18px, 3vw, 26px);
+      color: var(--gold-light);
+      font-weight: 400;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .hero-tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.3);
+      font-size: 11px;
+      letter-spacing: 3px;
+      animation: bounce 2s ease infinite;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    /* ============ SECTION COMMON ============ */
+    .section {
+      padding: 90px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 5px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .section-title strong {
+      font-weight: 700;
+      color: var(--ink-mid);
+    }
+
+    .section-desc {
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.9;
+      max-width: 620px;
+    }
+
+    /* ============ INFO STRIP ============ */
+    .info-strip {
+      background: var(--ink);
+      padding: 32px 0;
+    }
+
+    .info-strip-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      gap: 0;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .info-item {
+      text-align: center;
+      padding: 16px 32px;
+      border-right: 1px solid rgba(201,168,76,0.2);
+      flex: 1;
+      min-width: 140px;
+    }
+    .info-item:last-child { border-right: none; }
+
+    .info-item .val {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .info-item .val sup {
+      font-size: 14px;
+      vertical-align: top;
+      margin-top: 6px;
+      display: inline-block;
+    }
+
+    .info-item .lbl {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 6px;
+    }
+
+    /* ============ KEY FEATURES ============ */
+    .features-bg {
+      background: var(--cream);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border: 1px solid var(--cream-dark);
+      border-radius: 2px;
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      -webkit-transform: translateZ(0);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, var(--gold), var(--gold-light));
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      -webkit-transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(201,168,76,0.12);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gold-pale);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .feature-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink-mid);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.9;
+    }
+
+    .feature-highlight {
+      display: inline-block;
+      background: var(--gold-pale);
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-top: 14px;
+      letter-spacing: 1px;
+    }
+
+    /* ============ TAX SECTION ============ */
+    .tax-bg {
+      background: linear-gradient(135deg, #1A1208 0%, #2C1F0A 100%);
+      padding: 80px 24px;
+    }
+
+    .tax-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .tax-label {
+      font-size: 11px;
+      letter-spacing: 5px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .tax-title {
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+
+    .tax-title strong { color: var(--gold-light); font-weight: 700; }
+
+    .tax-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 2;
+    }
+
+    .tax-nums {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .tax-num-card {
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 2px;
+      padding: 28px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tax-num-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 60px; height: 60px;
+      border-top: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      opacity: 0.3;
+    }
+
+    .tax-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      color: var(--gold-light);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .tax-num sub {
+      font-size: 14px;
+      font-family: 'Noto Serif SC', serif;
+      color: var(--gold);
+      vertical-align: bottom;
+      margin-left: 4px;
+    }
+
+    .tax-num-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
+
+    /* ============ CHART SECTION ============ */
+    .chart-bg {
+      background: var(--white);
+      padding: 90px 24px;
+    }
+
+    .chart-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .chart-tabs {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--cream-dark);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .chart-tab {
+      padding: 10px 22px;
+      font-size: 13px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      background: var(--white);
+      color: var(--ink-soft);
+      border: none;
+      font-family: 'Noto Serif SC', serif;
+      transition: all 0.2s;
+      touch-action: manipulation;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .chart-tab.active {
+      background: var(--ink);
+      color: var(--gold-light);
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 420px;
+      border: 1px solid var(--cream-dark);
+      border-radius: 2px;
+      padding: 24px;
+      background: var(--cream);
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 32px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ============ BENEFIT TABLE ============ */
+    .table-bg {
+      background: var(--cream);
+      padding: 80px 24px;
+    }
+
+    .table-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .benefit-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 40px;
+      font-size: 13px;
+    }
+
+    .benefit-table th {
+      background: var(--ink);
+      color: var(--gold-light);
+      padding: 14px 16px;
+      text-align: center;
+      font-weight: 400;
+      letter-spacing: 1px;
+      font-size: 12px;
+    }
+
+    .benefit-table td {
+      padding: 10px 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--cream-dark);
+      color: var(--ink-soft);
+    }
+
+    .benefit-table tr:nth-child(even) td {
+      background: rgba(240,232,213,0.4);
+    }
+
+    .benefit-table tr:hover td {
+      background: var(--gold-pale);
+      color: var(--ink-mid);
+    }
+
+    .benefit-table .phase-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .phase-pay { background: #E8F4FD; color: #2471A3; }
+    .phase-receive { background: #EAFAF1; color: #1E8449; }
+    .phase-expire { background: var(--gold-pale); color: #7D6608; }
+
+    .benefit-table .highlight-row td {
+      background: rgba(201,168,76,0.1);
+      color: var(--ink-mid);
+      font-weight: 600;
+    }
+
+    /* ============ TIMELINE ============ */
+    .timeline-bg {
+      background: var(--ink);
+      padding: 80px 24px;
+      overflow: hidden;
+    }
+
+    .timeline-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .timeline-label {
+      font-size: 11px;
+      letter-spacing: 5px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .timeline-title {
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 56px;
+    }
+
+    .timeline {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      gap: 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+      z-index: 0;
+    }
+
+    .tl-item {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding-top: 0;
+    }
+
+    .tl-dot {
+      width: 56px;
+      height: 56px;
+      background: var(--ink);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tl-age {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: var(--gold-light);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .tl-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 1px;
+      line-height: 1.7;
+    }
+
+    /* ============ FOOTER ============ */
+    .footer {
+      background: #0E0B05;
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--gold);
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+    }
+
+    .footer-line {
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 2px;
+      line-height: 2;
+    }
+
+    .footer-advisor {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .advisor-item {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .advisor-item span {
+      color: var(--gold-light);
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 768px) {
+      .hero { min-height: 560px; }
+      .hero-deco-left, .hero-deco-right { display: none; }
+      .hero-name { letter-spacing: 6px; }
+      .hero-brand { letter-spacing: 3px; font-size: 11px; }
+
+      .info-strip { padding: 20px 0; }
+      .info-strip-inner { gap: 0; padding: 0 8px; }
+      .info-item {
+        min-width: 30%;
+        flex: 0 0 33.33%;
+        padding: 12px 8px;
+        border-right: none;
+        border-bottom: 1px solid rgba(201,168,76,0.15);
+      }
+      .info-item:nth-child(3) { border-right: none; }
+      .info-item .val { font-size: 22px; }
+      .info-item .lbl { font-size: 10px; }
+
+      .section { padding: 56px 16px; }
+
+      .features-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 36px; }
+      .feature-card { padding: 28px 20px; }
+
+      .tax-bg { padding: 56px 16px; }
+      .tax-inner { grid-template-columns: 1fr; gap: 36px; }
+      .tax-num { font-size: 28px; }
+      .tax-num-card { padding: 20px 20px; }
+
+      .chart-bg { padding: 56px 16px; }
+      .chart-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .chart-wrap { height: 300px; padding: 12px 8px; }
+      .chart-tabs { width: 100%; }
+      .chart-tab { flex: 1; padding: 10px 8px; font-size: 12px; }
+      .chart-legend { gap: 12px; }
+      .legend-item { font-size: 12px; }
+
+      .table-bg { padding: 56px 0; }
+      .table-inner { padding: 0 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .benefit-table { font-size: 11px; min-width: 560px; }
+      .benefit-table th { padding: 10px 8px; font-size: 11px; white-space: nowrap; }
+      .benefit-table td { padding: 8px 8px; white-space: nowrap; }
+      .section-desc { font-size: 13px; }
+
+      .timeline-bg { padding: 56px 16px; }
+      .timeline {
+        flex-direction: column;
+        gap: 0;
+        padding-left: 28px;
+      }
+      .timeline::before {
+        display: block;
+        top: 0; bottom: 0;
+        left: 27px; right: auto;
+        width: 2px;
+        height: auto;
+        background: linear-gradient(to bottom, var(--gold), var(--gold-light), var(--gold));
+      }
+      .tl-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 0 0 28px 0;
+        text-align: left;
+        flex: none;
+      }
+      .tl-dot {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        font-size: 18px;
+        margin: 0;
+      }
+      .tl-age { font-size: 20px; margin-bottom: 4px; }
+      .tl-desc { font-size: 12px; }
+
+      .footer { padding: 36px 16px; }
+      .footer-advisor { gap: 16px; }
+    }
+
+    @media (max-width: 390px) {
+      .info-item .val { font-size: 18px; }
+      .hero-name { font-size: 42px; letter-spacing: 4px; }
+      .chart-wrap { height: 260px; }
+    }
+
+    /* ============ ANIMATIONS ============ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============ ORNAMENT ============ */
+    .ornament {
+      text-align: center;
+      margin: 0 auto;
+      padding: 48px 0 0;
+    }
+
+    .ornament-line {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .ornament-line::before,
+    .ornament-line::after {
+      content: '';
+      flex: 1;
+      max-width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .ornament-line::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .ornament-diamond {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+
+    /* iOS Safari 特定修复 */
+    @supports (-webkit-touch-callout: none) {
+      .hero {
+        min-height: -webkit-fill-available;
+      }
+      
+      .chart-wrap {
+        height: 380px;
+      }
+    }
+
+    /* 防止iOS双击缩放 */
+    button, .chart-tab, .feature-card {
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <svg class="hero-deco-left" viewBox="0 0 200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 10 L190 100 L100 190 L10 100 Z" stroke="#C9A84C" stroke-width="1" fill="none"/>
+    <path d="M100 40 L160 100 L100 160 L40 100 Z" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+    <path d="M100 200 L190 300 L100 400" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+    <circle cx="100" cy="100" r="5" fill="#C9A84C"/>
+    <line x1="100" y1="10" x2="100" y2="190" stroke="#C9A84C" stroke-width="0.5"/>
+    <line x1="10" y1="100" x2="190" y2="100" stroke="#C9A84C" stroke-width="0.5"/>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="hero-brand">AIA · 友邦保险 · 个人养老金计划</div>
+    <div class="hero-name">章 <span>燕</span></div>
+    <div class="hero-subtitle">专属养老规划方案 · 2025年版</div>
+    <div class="hero-divider"></div>
+    <div class="hero-product">友邦利享年年（2025）A款</div>
+    <div class="hero-product" style="font-size:16px;margin-top:6px;opacity:0.7;">年金保险（分红型）</div>
+    <div class="hero-tagline" style="margin-top:16px;">建议人：季静远 · 编号 000786366</div>
+  </div>
+
+  <svg class="hero-deco-right" viewBox="0 0 200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 10 L190 100 L100 190 L10 100 Z" stroke="#C9A84C" stroke-width="1" fill="none"/>
+    <path d="M100 40 L160 100 L100 160 L40 100 Z" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+    <path d="M100 200 L190 300 L100 400" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+    <circle cx="100" cy="100" r="5" fill="#C9A84C"/>
+    <line x1="100" y1="10" x2="100" y2="190" stroke="#C9A84C" stroke-width="0.5"/>
+    <line x1="10" y1="100" x2="190" y2="100" stroke="#C9A84C" stroke-width="0.5"/>
+  </svg>
+
+  <div class="hero-scroll">SCROLL</div>
+</section>
+
+<!-- ===== INFO STRIP ===== -->
+<div class="info-strip">
+  <div class="info-strip-inner">
+    <div class="info-item">
+      <div class="val">41<sup>岁</sup></div>
+      <div class="lbl">投保年龄</div>
+    </div>
+    <div class="info-item">
+      <div class="val">1.2<sup>万</sup></div>
+      <div class="lbl">年缴保费</div>
+    </div>
+    <div class="info-item">
+      <div class="val">14<sup>年</sup></div>
+      <div class="lbl">交费期限</div>
+    </div>
+    <div class="info-item">
+      <div class="val">55<sup>岁</sup></div>
+      <div class="lbl">开始领取</div>
+    </div>
+    <div class="info-item">
+      <div class="val">20<sup>年</sup></div>
+      <div class="lbl">年金领取期</div>
+    </div>
+    <div class="info-item">
+      <div class="val">16.8<sup>万</sup></div>
+      <div class="lbl">累计投入</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CORE SELLING POINTS ===== -->
+<div class="features-bg">
+  <div class="section">
+    <div class="reveal">
+      <div class="section-label">核心卖点</div>
+      <div class="section-title">五重价值<strong>，守护您的</strong><br>幸福晚年</div>
+      <div class="section-desc">友邦利享年年（2025）A款，为您量身定制个人养老金账户专属方案，兼顾税收优惠、年金领取、身故保障与分红增值四重利益。</div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">节税减负</div>
+        <div class="feature-desc">通过个人养老金账户缴费，按 25% 税率每年可退税 <strong>3,000 元</strong>，14 年交费期内累计享受退税 <strong>42,000 元</strong>。用税收优惠让您的钱更值钱。</div>
+        <div class="feature-highlight">↑ 节税 42,000 元</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon">🏡</div>
+        <div class="feature-title">稳定年金</div>
+        <div class="feature-desc">55 周岁起，每年领取 <strong>9,939.6 元</strong>，连续领取 <strong>20 年</strong>，至 74 周岁，累计领取约 <strong>20 万元</strong>。养老现金流稳稳的，让晚年生活无忧。</div>
+        <div class="feature-highlight">↑ 20年持续领取</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">分红增值</div>
+        <div class="feature-desc">产品为<strong>分红型年金保险</strong>，每年宣布增额红利，叠加保证利益之上。演示显示 34 年间累计增额红利达 <strong>5,293 元</strong>，总给付较保证利益有所提升。</div>
+        <div class="feature-highlight">↑ 红利持续累积</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">身故保障</div>
+        <div class="feature-desc">交费期间不幸离世，给付<strong>现金价值与累计已缴保费的较大值</strong>，本金有保障，绝不亏损。保障财富安全传承，给家人最后的安心。</div>
+        <div class="feature-highlight">↑ 本金安全保障</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">资金安全</div>
+        <div class="feature-desc">个人养老金资金账户<strong>封闭管理</strong>，专款专用，不受其他债务影响。保单可用于<strong>保单贷款</strong>（非养老金账户缴费情形），最高现金价值 80%。</div>
+        <div class="feature-highlight">↑ 专户封闭保护</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">满期红利</div>
+        <div class="feature-desc">75 周岁保险期满，额外给付<strong>满期金 993.96 元</strong>及因增额红利增加的满期金。加上领取期年金，总回报率超越同期储蓄利率，是长期养老规划的优质选择。</div>
+        <div class="feature-highlight">↑ 保障至75岁</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAX BENEFIT ===== -->
+<div class="tax-bg">
+  <div class="tax-inner">
+    <div class="reveal">
+      <div class="tax-label">个人养老金税收优惠</div>
+      <div class="tax-title">把税务局的钱<br><strong>变成您的养老金</strong></div>
+      <div class="tax-desc">
+        按照国家个人养老金政策，每年最高 12,000 元可享受税前扣除。以章燕女士 25% 税率计算，每年缴纳 12,000 元保费，即可获得 3,000 元退税。
+        <br><br>
+        14 年交费期内，<strong style="color: var(--gold-light)">累计退税 42,000 元</strong>，相当于您实际净投入仅 126,000 元，但享受 168,000 元完整保障。
+      </div>
+    </div>
+    <div class="tax-nums reveal">
+      <div class="tax-num-card">
+        <div class="tax-num">3,000<sub>元/年</sub></div>
+        <div class="tax-num-desc">按 25% 税率，每年退税金额</div>
+      </div>
+      <div class="tax-num-card">
+        <div class="tax-num">42,000<sub>元</sub></div>
+        <div class="tax-num-desc">14年交费期内，累计退税总额</div>
+      </div>
+      <div class="tax-num-card">
+        <div class="tax-num">126,000<sub>元</sub></div>
+        <div class="tax-num-desc">税后实际净成本（168,000 - 42,000）</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHART SECTION ===== -->
+<div class="chart-bg">
+  <div class="chart-inner">
+    <div class="chart-header reveal">
+      <div>
+        <div class="section-label">保险利益演示</div>
+        <div class="section-title" style="margin-bottom:0">资金增长曲线</div>
+      </div>
+      <div class="chart-tabs">
+        <button class="chart-tab active" onclick="switchChart('dividend', event)">红利演示</button>
+        <button class="chart-tab" onclick="switchChart('guaranteed', event)">保证利益</button>
+        <button class="chart-tab" onclick="switchChart('compare', event)">对比视图</button>
+      </div>
+    </div>
+
+    <div class="chart-wrap reveal">
+      <canvas id="mainChart"></canvas>
+    </div>
+
+    <div class="chart-legend" id="chartLegend">
+      <div class="legend-item"><div class="legend-dot" style="background:#C9A84C"></div>累计投入保费</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2471A3"></div>总退保给付（含红利）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1E8449"></div>累计领取年金</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C0392B"></div>总身故给付</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TIMELINE ===== -->
+<div class="timeline-bg">
+  <div class="timeline-inner">
+    <div class="reveal">
+      <div class="timeline-label">人生规划时间轴</div>
+      <div class="timeline-title">从 <strong style="color:var(--gold-light)">41 岁</strong> 到 <strong style="color:var(--gold-light)">75 岁</strong>，您的财富旅程</div>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot">📝</div>
+        <div class="tl-age">41岁</div>
+        <div class="tl-desc">投保起始<br>每年缴纳<br>12,000元</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">💸</div>
+        <div class="tl-age">50岁</div>
+        <div class="tl-desc">累计缴入<br>120,000元<br>现金价值99,014元</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🔚</div>
+        <div class="tl-age">54岁</div>
+        <div class="tl-desc">完成缴费<br>累计投入<br>168,000元</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🎊</div>
+        <div class="tl-age">55岁</div>
+        <div class="tl-desc">开始领取<br>每年9,939.6元<br>起</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">💰</div>
+        <div class="tl-age">65岁</div>
+        <div class="tl-desc">累计领取<br>约119,000+元<br>（含红利）</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🏁</div>
+        <div class="tl-age">75岁</div>
+        <div class="tl-desc">保险期满<br>累计领取超<br>261,000元</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BENEFIT TABLE ===== -->
+<div class="table-bg">
+  <div class="table-inner">
+    <div class="reveal">
+      <div class="section-label">利益演示明细</div>
+      <div class="section-title">红利利益演示表 <strong>（关键年度）</strong></div>
+      <div class="section-desc">以下为重要年度的保险利益数据，基于红利演示情景。实际红利视公司经营情况而定，保证利益部分以合同条款为准。</div>
+    </div>
+
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table class="benefit-table reveal">
+      <thead>
+        <tr>
+          <th>保单年度</th>
+          <th>被保险人年龄</th>
+          <th>阶段</th>
+          <th>累计保险费（元）</th>
+          <th>总退保给付（元）</th>
+          <th>总身故给付（元）</th>
+          <th>当年度年金（元）</th>
+          <th>累计年金（元）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>41</td><td><span class="phase-tag phase-pay">缴费期</span></td><td>12,000</td><td>5,183</td><td>12,083</td><td>—</td><td>—</td></tr>
+        <tr><td>5</td><td>45</td><td><span class="phase-tag phase-pay">缴费期</span></td><td>60,000</td><td>39,248</td><td>61,748</td><td>—</td><td>—</td></tr>
+        <tr><td>10</td><td>50</td><td><span class="phase-tag phase-pay">缴费期</span></td><td>120,000</td><td>99,014</td><td>128,186</td><td>—</td><td>—</td></tr>
+        <tr class="highlight-row"><td>14</td><td>54</td><td><span class="phase-tag phase-pay">缴费完成</span></td><td>168,000</td><td>162,171</td><td>189,374</td><td>11,204</td><td>11,204</td></tr>
+        <tr class="highlight-row"><td>15</td><td>55</td><td><span class="phase-tag phase-receive">领取期</span></td><td>168,000</td><td>159,009</td><td>180,927</td><td>11,378</td><td>22,582</td></tr>
+        <tr><td>20</td><td>60</td><td><span class="phase-tag phase-receive">领取期</span></td><td>168,000</td><td>137,628</td><td>137,629</td><td>12,286</td><td>82,166</td></tr>
+        <tr><td>25</td><td>65</td><td><span class="phase-tag phase-receive">领取期</span></td><td>168,000</td><td>104,471</td><td>104,473</td><td>13,266</td><td>146,505</td></tr>
+        <tr><td>30</td><td>70</td><td><span class="phase-tag phase-receive">领取期</span></td><td>168,000</td><td>55,499</td><td>55,499</td><td>14,325</td><td>215,980</td></tr>
+        <tr class="highlight-row"><td>34</td><td>74</td><td><span class="phase-tag phase-receive">末年</span></td><td>168,000</td><td>1,523</td><td>1,523</td><td>1,523</td><td>261,822</td></tr>
+        <tr class="highlight-row"><td>—</td><td>75</td><td><span class="phase-tag phase-expire">满期</span></td><td>168,000</td><td>—</td><td>—</td><td>满期金 994</td><td>约 261,822+</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div style="margin-top:20px;font-size:12px;color:var(--ink-soft);line-height:2;">
+      ⚠️ 本演示为红利利益演示，红利分配不确定，在某些年度可能为零。保证利益以保险合同条款为准。建议书不构成保险合同的一部分。
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-logo">AIA 友邦保险</div>
+  <div class="footer-line">
+    友邦利享年年（2025）A款年金保险（分红型）· 个人养老金专属计划<br>
+    本建议书仅供参考，不构成保险合同的一部分
+  </div>
+  <div class="footer-advisor">
+    <div class="advisor-item">建议人 <span>季静远</span></div>
+    <div class="advisor-item">编号 <span>000786366</span></div>
+    <div class="advisor-item">联系电话 <span>153-1772-0331</span></div>
+  </div>
+  <div style="margin-top:32px;font-size:11px;color:rgba(255,255,255,0.1);letter-spacing:2px;">
+    aia.com.cn · 保险公司、保险销售从业人员不得违规销售非保险金融产品，请勿参与非法集资
+  </div>
+</footer>
+
+<script>
+// ===== DATA =====
+const ages = [41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74];
+const years = ages.map((a,i) => `${a}岁\n(第${i+1}年)`);
+
+const dividendData = {
+  premiumCumulative: [12000,24000,36000,48000,60000,72000,84000,96000,108000,120000,132000,144000,156000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000],
+  surrenderValue:    [5183,12021,20215,29408,39248,49737,60916,72827,85515,99014,113383,128658,144899,162171,159009,155514,151645,147390,142732,137628,132048,125983,119377,112218,104471,96086,87037,77283,66793,55499,43380,30387,16445,1523],
+  deathBenefit:      [12083,24273,36595,49076,61748,74601,87652,100919,114423,128186,142478,157550,173167,189374,180927,172175,163107,153717,143996,137629,132048,125984,119377,112218,104473,96087,87037,77283,66795,55499,43380,30389,16445,1523],
+  annuityAccum:      [0,0,0,0,0,0,0,0,0,0,0,0,0,11204,22582,34135,45868,57782,69880,82166,94642,107310,120175,133239,146505,159977,173657,187548,201655,215980,230526,245298,260298,261822]
+};
+
+const guaranteedData = {
+  premiumCumulative: [12000,24000,36000,48000,60000,72000,84000,96000,108000,120000,132000,144000,156000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000,168000],
+  surrenderValue:    [5100,11748,19620,28332,37500,47136,57264,67908,79092,90828,103152,116076,129636,143868,138912,133788,128472,122964,117264,111348,105204,98844,92232,85380,78276,70896,63240,55296,47064,38508,29640,20448,10896,994],
+  deathBenefit:      [12000,24000,36000,48000,60000,72000,84000,96000,108000,120000,132000,144000,156000,168000,158060,148121,138181,128242,118302,111348,105204,98844,92232,85380,78276,70896,63240,55296,47064,38508,29640,20448,10896,994],
+  annuityAccum:      [0,0,0,0,0,0,0,0,0,0,0,0,0,9940,19879,29819,39758,49698,59638,69577,79517,89456,99396,109336,119275,129215,139154,149094,159034,168973,178913,188852,198792,199786]
+};
+
+// ===== CHART =====
+let mainChart = null;
+let currentMode = 'dividend';
+
+const chartColors = {
+  premium: { line: '#C9A84C', fill: 'rgba(201,168,76,0.08)' },
+  surrender: { line: '#2471A3', fill: 'rgba(36,113,163,0.06)' },
+  annuity: { line: '#1E8449', fill: 'rgba(30,132,73,0.06)' },
+  death: { line: '#C0392B', fill: 'rgba(192,57,43,0.05)' },
+  guaranteed_surrender: { line: '#7D6608', fill: 'rgba(125,102,8,0.05)' },
+  guaranteed_annuity: { line: '#0B5345', fill: 'rgba(11,83,69,0.05)' }
+};
+
+function makeDataset(label, data, colorKey, dashed) {
+  const c = chartColors[colorKey];
+  return {
+    label,
+    data,
+    borderColor: c.line,
+    backgroundColor: c.fill,
+    borderWidth: dashed ? 2 : 2.5,
+    borderDash: dashed ? [6, 4] : [],
+    fill: true,
+    tension: 0.4,
+    pointRadius: 0,
+    pointHoverRadius: 5,
+    pointHoverBackgroundColor: c.line,
+  };
+}
+
+function initChart() {
+  const canvas = document.getElementById('mainChart');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const chartConfig = {
+    type: 'line',
+    data: {
+      labels: ages.map(a => a + '岁'),
+      datasets: [
+        makeDataset('累计投入保费', dividendData.premiumCumulative, 'premium'),
+        makeDataset('总退保给付（含红利）', dividendData.surrenderValue, 'surrender'),
+        makeDataset('累计领取年金', dividendData.annuityAccum, 'annuity'),
+        makeDataset('总身故给付', dividendData.deathBenefit, 'death')
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(26,18,8,0.92)',
+          titleColor: '#C9A84C',
+          bodyColor: 'rgba(255,255,255,0.8)',
+          borderColor: 'rgba(201,168,76,0.3)',
+          borderWidth: 1,
+          padding: 14,
+          callbacks: {
+            label: function(ctx) {
+              return ' ' + ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString() + ' 元';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(0,0,0,0.04)' },
+          ticks: {
+            font: { size: 11, family: "'Noto Serif SC', serif" },
+            color: '#6B5A3A',
+            maxTicksLimit: 12
+          }
+        },
+        y: {
+          grid: { color: 'rgba(0,0,0,0.05)' },
+          ticks: {
+            font: { size: 11, family: "'Noto Serif SC', serif" },
+            color: '#6B5A3A',
+            callback: function(v) {
+              return v >= 10000 ? (v/10000).toFixed(0) + '万' : v;
+            }
+          }
+        }
+      },
+      animation: { duration: 800, easing: 'easeInOutQuart' }
+    }
+  };
+
+  try {
+    mainChart = new Chart(ctx, chartConfig);
+  } catch(e) {
+    console.error('Chart initialization failed:', e);
+  }
+}
+
+function switchChart(mode, evt) {
+  currentMode = mode;
+  
+  // 安全地获取事件目标
+  let target = null;
+  if (evt && evt.target) {
+    target = evt.target;
+  } else if (window.event && window.event.target) {
+    target = window.event.target;
+  }
+  
+  // 更新按钮状态
+  document.querySelectorAll('.chart-tab').forEach(function(t) {
+    t.classList.remove('active');
+  });
+  
+  if (target && target.classList) {
+    target.classList.add('active');
+  } else {
+    // 回退：根据模式找到对应的按钮
+    const index = mode === 'dividend' ? 0 : (mode === 'guaranteed' ? 1 : 2);
+    const buttons = document.querySelectorAll('.chart-tab');
+    if (buttons[index]) buttons[index].classList.add('active');
+  }
+
+  if (!mainChart) return;
+
+  let datasets = [];
+  let legendHTML = '';
+  
+  if (mode === 'dividend') {
+    datasets = [
+      makeDataset('累计投入保费', dividendData.premiumCumulative, 'premium'),
+      makeDataset('总退保给付（含红利）', dividendData.surrenderValue, 'surrender'),
+      makeDataset('累计领取年金', dividendData.annuityAccum, 'annuity'),
+      makeDataset('总身故给付', dividendData.deathBenefit, 'death')
+    ];
+    legendHTML = `
+      <div class="legend-item"><div class="legend-dot" style="background:#C9A84C"></div>累计投入保费</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2471A3"></div>总退保给付（含红利）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1E8449"></div>累计领取年金</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C0392B"></div>总身故给付</div>`;
+  } else if (mode === 'guaranteed') {
+    datasets = [
+      makeDataset('累计投入保费', guaranteedData.premiumCumulative, 'premium'),
+      makeDataset('退保金（现金价值）', guaranteedData.surrenderValue, 'surrender'),
+      makeDataset('累计领取年金（保证）', guaranteedData.annuityAccum, 'annuity'),
+      makeDataset('身故保险金', guaranteedData.deathBenefit, 'death')
+    ];
+    legendHTML = `
+      <div class="legend-item"><div class="legend-dot" style="background:#C9A84C"></div>累计投入保费</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2471A3"></div>退保金（现金价值）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1E8449"></div>累计领取年金（保证）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C0392B"></div>身故保险金</div>`;
+  } else {
+    datasets = [
+      makeDataset('累计投入保费', dividendData.premiumCumulative, 'premium'),
+      makeDataset('退保给付（含红利）', dividendData.surrenderValue, 'surrender'),
+      makeDataset('退保金（仅保证）', guaranteedData.surrenderValue, 'guaranteed_surrender', true),
+      makeDataset('累计年金（含红利）', dividendData.annuityAccum, 'annuity'),
+      makeDataset('累计年金（仅保证）', guaranteedData.annuityAccum, 'guaranteed_annuity', true)
+    ];
+    legendHTML = `
+      <div class="legend-item"><div class="legend-dot" style="background:#C9A84C"></div>累计投入保费</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2471A3"></div>退保给付（含红利）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7D6608"></div>退保金（仅保证）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1E8449"></div>累计年金（含红利）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#0B5345"></div>累计年金（仅保证）</div>`;
+  }
+
+  mainChart.data.datasets = datasets;
+  mainChart.update();
+  
+  const legendEl = document.getElementById('chartLegend');
+  if (legendEl) legendEl.innerHTML = legendHTML;
+}
+
+// ===== SCROLL REVEAL =====
+function initScrollReveal() {
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry, i) {
+        if (entry.isIntersecting) {
+          setTimeout(function() {
+            entry.target.classList.add('visible');
+          }, i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      observer.observe(el);
+    });
+  } else {
+    // 回退：直接显示所有元素
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }
+}
+
+// ===== INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', function() {
+  // 延迟初始化Chart，确保DOM完全就绪
+  setTimeout(function() {
+    initChart();
+  }, 100);
+  
+  initScrollReveal();
+});
+
+// 处理iOS上的100vh问题
+window.addEventListener('resize', function() {
+  if (window.innerWidth < 768) {
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      hero.style.height = window.innerHeight + 'px';
+    }
+  }
+});
+</script>
+
+</body>
+</html>
