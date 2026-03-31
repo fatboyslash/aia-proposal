@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>章燕专属医疗险方案对比：智选逸生 vs 传世无忧安心版</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Application Structure Plan: 
+         1. Header/Hero: Context setting.
+         2. Executive Summary: Objective third-person perspective.
+         3. Visual Dashboard (Charts): Radar (corrected logic) and Bar.
+         4. Waterfall Detailed Comparison: Core, Drugs, Network.
+         5. Waterfall Scenario Analysis: UPDATED SCENARIOS. Now reflects realistic cost differences between Public Ward (Plan A) and VIP/Special Needs Ward (Plan B), acknowledging that high-end care costs much more and relies less on social insurance. -->
+
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 640px) {
+            .chart-container { height: 280px; }
+        }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .sticky-header {
+            position: sticky;
+            top: 60px;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed pb-20">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl sm:text-2xl font-bold text-slate-900 truncate">友邦医疗险方案深度解析</h1>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">专属定制客户：<span class="font-semibold text-slate-800">章燕</span> 女士</p>
+            </div>
+            <div class="hidden sm:block text-right">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">真实场景推演版 V7.0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-6 space-y-10">
+
+        <!-- Executive Summary -->
+        <section class="bg-white rounded-2xl p-5 md:p-8 shadow-sm border border-slate-100">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <span class="text-2xl mr-2">🎯</span> 方案导读
+            </h2>
+            <p class="text-slate-600 mb-6 text-sm sm:text-base">
+                针对章燕女士的健康保障需求，本报告对比了两款不同定位的医疗险建议书。本页面采用瀑布流设计，方便向下滚动浏览，直观对比各项核心差异。
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-5 rounded-xl bg-indigo-50 border border-indigo-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl">🛡️</div>
+                    <h3 class="text-lg font-bold text-indigo-900 mb-2">方案一：智选逸生 (百万医疗)</h3>
+                    <p class="text-sm text-indigo-700">高性价比的基础防线。以较低保费撬动高保额，理赔起付线较低(5000元)，主要解决公立普通部的大额花费兜底问题。</p>
+                </div>
+                <div class="p-5 rounded-xl bg-rose-50 border border-rose-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl">💎</div>
+                    <h3 class="text-lg font-bold text-rose-900 mb-2">方案二：传世无忧 (高端医疗)</h3>
+                    <p class="text-sm text-rose-700">高品质就医体验。初始免赔高(2万元)专注大病过滤小病。突破医保束缚，全额覆盖特需/国际部高昂病房费及进口药械，享直付服务。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Dashboard -->
+        <section>
+            <div class="mb-4">
+                <h2 class="text-xl font-bold flex items-center">
+                    <span class="text-2xl mr-2">📊</span> 核心数据总览
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Radar Chart -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+                    <h3 class="text-md font-semibold mb-1 text-center">综合价值对比图</h3>
+                    <p class="text-xs text-slate-400 text-center mb-4">面积越大，综合优势越强</p>
+                    <div class="chart-container flex-grow">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Bar Chart -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+                    <h3 class="text-md font-semibold mb-4 text-center">年度最高报销限额 (万元)</h3>
+                    <div class="chart-container flex-grow">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Waterfall Detailed Comparison -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="p-5 md:p-8 border-b border-slate-100 bg-slate-900 text-white">
+                <h2 class="text-xl font-bold flex items-center">
+                    <span class="text-2xl mr-2">📑</span> 深度条款精拆
+                </h2>
+                <p class="text-sm text-slate-400 mt-1">向下滑动，查看不同维度的核心差异。</p>
+            </div>
+
+            <!-- Section 1: Core -->
+            <div class="border-b-4 border-slate-100">
+                <div class="sticky-header py-3 px-5 border-b border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center"><span class="mr-2">🏥</span> 核心报销责任与门槛</h3>
+                </div>
+                <div class="p-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Plan A -->
+                        <div class="bg-indigo-50/30 rounded-lg p-4 border border-indigo-100">
+                            <h4 class="font-bold text-indigo-800 border-b border-indigo-100 pb-2 mb-3">智选逸生 (百万医疗)</h4>
+                            <div class="space-y-4 text-sm">
+                                <div>
+                                    <span class="font-semibold text-slate-700 block mb-1">免赔额设定 (极重要)：</span>
+                                    <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">5000元 (绝对免赔)</span>
+                                    <p class="text-slate-600 mt-1">医保统筹报销的金额<span class="font-bold text-red-600">不能</span>抵扣这5000元。这意味着只要发生住院，前5000元的自费必须由客户个人硬性承担。</p>
+                                </div>
+                                <div>
+                                    <span class="font-semibold text-slate-700 block mb-1">住院及手术费：</span>
+                                    <p class="text-slate-600">包含床位费(普通单人/双人间)、常规手术费等。<br><span class="text-slate-400 text-xs">注：仅包含治疗性质的手术。</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Plan B -->
+                        <div class="bg-rose-50/30 rounded-lg p-4 border border-rose-100">
+                            <h4 class="font-bold text-rose-800 border-b border-rose-100 pb-2 mb-3">传世无忧 (高端医疗)</h4>
+                            <div class="space-y-4 text-sm">
+                                <div>
+                                    <span class="font-semibold text-slate-700 block mb-1">免赔额设定 (极重要)：</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold">20,000元 (相对免赔)</span>
+                                    <p class="text-slate-600 mt-1">医保统筹报销金额<span class="font-bold text-green-600">可以</span>全额抵扣。若大病医保报销远超2万，客户的剩余自费部分直接实现 0免赔全额报销。</p>
+                                </div>
+                                <div>
+                                    <span class="font-semibold text-slate-700 block mb-1">住院及手术费：</span>
+                                    <p class="text-slate-600">无视医保目录限制，包含特需标准单人间等全额报销。<br><span class="font-bold text-rose-600">【特权】包含“重建手术费”</span>：为恢复身体外观(如乳房切除后)的整形手术亦在报销之列。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Drugs -->
+            <div class="border-b-4 border-slate-100 bg-slate-50/50">
+                <div class="sticky-header py-3 px-5 border-b border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center"><span class="mr-2">💊</span> 前沿特药与稀缺医疗资源</h3>
+                </div>
+                <div class="p-5">
+                    <p class="text-sm text-slate-600 mb-4 bg-white p-3 rounded border border-slate-200">
+                        核心焦点：当罹患重疾需要使用国内尚未上市的全球最新特效药（如在海南博鳌乐城特区）时，两款产品提供了不同的解决路径。
+                    </p>
+                    <div class="grid grid-cols-1 gap-6">
+                        <!-- Plan A -->
+                        <div class="border-l-4 border-indigo-400 pl-4 py-1">
+                            <h4 class="font-bold text-indigo-900 mb-2">智选逸生：政策特区的突围</h4>
+                            <p class="text-sm text-slate-700 mb-2">其“可选责任2”不仅覆盖常规靶向药，更将保障拓展至 <span class="font-bold bg-indigo-100 text-indigo-800 px-1 rounded">临床急需进口药品</span> 及 <span class="font-bold bg-indigo-100 text-indigo-800 px-1 rounded">罕见病特药</span>。</p>
+                            <p class="text-sm text-slate-600">这打破了传统百万医疗险仅报销国内已上市药品的桎梏，为客户在危重情况下博取了使用全球最前沿特效药的契机。</p>
+                        </div>
+                        <!-- Plan B -->
+                        <div class="border-l-4 border-rose-400 pl-4 py-1">
+                            <h4 class="font-bold text-rose-900 mb-2">传世无忧：高端直付的闭环体验</h4>
+                            <p class="text-sm text-slate-700 mb-2">不仅拥有上述特药权限，其获取路径更为尊贵。客户可直接前往三甲医院在特区的分支（如 <span class="font-bold text-rose-700">瑞金医院海南医院</span>）进行特需就诊。</p>
+                            <p class="text-sm text-slate-600">最关键的是，使用天价海外新药可享受 <span class="font-bold bg-rose-100 text-rose-800 px-1 rounded">医疗网络内直付</span>，免去了百万医疗险常见的“自行筹款数十万买药再报销”的巨大资金垫付压力。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Network -->
+            <div>
+                <div class="sticky-header py-3 px-5 border-b border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center"><span class="mr-2">🌍</span> 就医网络与结算体验</h3>
+                </div>
+                <div class="p-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Plan A -->
+                        <div class="bg-indigo-50/30 rounded-lg p-4 border border-indigo-100">
+                            <h4 class="font-bold text-indigo-800 mb-3">智选逸生 (百万医疗)</h4>
+                            <ul class="space-y-3 text-sm text-slate-700">
+                                <li><span class="font-semibold text-slate-900">就诊范围：</span>仅限二级及以上公立医院<span class="font-bold underline decoration-indigo-400">普通部</span>。面对拥挤的门诊和多人病房。</li>
+                                <li><span class="font-semibold text-slate-900">结算方式：</span>事后理赔 / 需自行垫付。就医时需先自行支付费用，出院后收集发票报销。</li>
+                            </ul>
+                        </div>
+                        <!-- Plan B -->
+                        <div class="bg-rose-50/30 rounded-lg p-4 border border-rose-100">
+                            <h4 class="font-bold text-rose-800 mb-3">传世无忧 (高端医疗)</h4>
+                            <ul class="space-y-3 text-sm text-slate-700">
+                                <li><span class="font-semibold text-slate-900">就诊范围：</span>扩展公立医院<span class="font-bold text-rose-600 underline decoration-rose-400">特需部、国际部、VIP部</span>。直通核心专家，享单间静养。</li>
+                                <li><span class="font-semibold text-slate-900">结算方式：</span>医疗网络内<span class="font-bold text-rose-600">直付</span>。就医无需带钱垫付，签字即走，由保险公司与医院直接结账。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Waterfall Scenario Analysis (REALISTIC COSTS) -->
+        <section>
+            <div class="mb-4">
+                <h2 class="text-xl font-bold flex items-center">
+                    <span class="text-2xl mr-2">🎬</span> 真实医疗生态推演
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">高端环境（特需单间、进口原研药）的花费远高于普通部，且医保报销极少。以下推演还原了两种方案在各自生态下的真实账单结构。</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Scenario 1 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-slate-100 px-5 py-4 border-b border-slate-200">
+                        <h3 class="font-bold text-lg text-slate-800">🤒 场景一：甲状腺结节微创手术 (常见轻症)</h3>
+                    </div>
+                    <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Plan A -->
+                        <div class="bg-indigo-50/50 p-4 rounded border border-indigo-100">
+                            <div class="text-indigo-800 font-bold mb-2">方案一：智选逸生 (在公立普通部)</div>
+                            <div class="text-sm text-slate-700 mb-3 border-b border-indigo-100 pb-2">
+                                <p>因使用普通床位及常规医保内耗材，整体开销受控：</p>
+                                <ul class="list-disc pl-5 mt-1 text-slate-600">
+                                    <li>总医疗费用：<span class="font-semibold">3.0 万元</span></li>
+                                    <li>医保可报销：<span class="font-semibold text-green-600">1.5 万元</span> (报销比例高)</li>
+                                    <li>剩余自费：<span class="font-semibold text-red-600">1.5 万元</span></li>
+                                </ul>
+                            </div>
+                            <div class="text-sm text-slate-700 space-y-2">
+                                <p class="font-bold">理赔计算：</p>
+                                <p>自费 15,000 - 绝对免赔 5,000 = <span class="font-bold text-indigo-600">保险报销 10,000元</span></p>
+                                <p class="text-xs bg-white p-2 border border-indigo-50 rounded text-slate-500">
+                                    <span class="font-bold text-slate-700">客户体感：</span>客户必须实打实承担 5,000 元的免赔额，且只能在拥挤的普通部三人间就医。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Plan B -->
+                        <div class="bg-rose-50/50 p-4 rounded border border-rose-100">
+                            <div class="text-rose-800 font-bold mb-2">方案二：传世无忧 (在公立特需部)</div>
+                            <div class="text-sm text-slate-700 mb-3 border-b border-rose-100 pb-2">
+                                <p>因特需专家点名费、高昂单人病房费及全进口吻合器，均不入医保：</p>
+                                <ul class="list-disc pl-5 mt-1 text-slate-600">
+                                    <li>总医疗费用：<span class="font-semibold">6.0 万元</span> (是普通部两倍)</li>
+                                    <li>医保可报销：<span class="font-semibold text-green-600">0.5 万元</span> (仅少部分基础用药)</li>
+                                    <li>剩余自费：<span class="font-semibold text-red-600">5.5 万元</span></li>
+                                </ul>
+                            </div>
+                            <div class="text-sm text-slate-700 space-y-2">
+                                <p class="font-bold">理赔计算：</p>
+                                <p>医保(0.5万)抵扣后，剩余需扣相对免赔额：1.5万元。</p>
+                                <p>自费 55,000 - 剩余免赔 15,000 = <span class="font-bold text-rose-600 text-lg">保险报销 40,000元</span></p>
+                                <p class="text-xs bg-white p-2 border border-rose-50 rounded text-slate-500">
+                                    <span class="font-bold text-slate-700">客户体感：</span>客户自费了1.5万(未满2万门槛)，但享受的是主任级专家主刀、特需单间静养、完全无痛的高端体验。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario 2 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-slate-800 px-5 py-4 border-b border-slate-700 text-white">
+                        <h3 class="font-bold text-lg">🚑 场景二：突发重疾(如恶性肿瘤)手术及特药治疗</h3>
+                    </div>
+                    <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Plan A -->
+                        <div class="bg-indigo-50/50 p-4 rounded border border-indigo-100">
+                            <div class="text-indigo-800 font-bold mb-2">方案一：智选逸生 (在公立普通部)</div>
+                            <div class="text-sm text-slate-700 mb-3 border-b border-indigo-100 pb-2">
+                                <p>在公立普通部手术，出院后申请院外特药配药：</p>
+                                <ul class="list-disc pl-5 mt-1 text-slate-600">
+                                    <li>总医疗费用：<span class="font-semibold">20.0 万元</span></li>
+                                    <li>医保可报销：<span class="font-semibold text-green-600">12.0 万元</span> (大病统筹比例高)</li>
+                                    <li>剩余自费：<span class="font-semibold text-red-600">8.0 万元</span></li>
+                                </ul>
+                            </div>
+                            <div class="text-sm text-slate-700 space-y-2">
+                                <p class="font-bold">理赔计算：</p>
+                                <p>自费 80,000 - 绝对免赔 5,000 = <span class="font-bold text-indigo-600">保险报销 75,000元</span></p>
+                                <p class="text-xs bg-white p-2 border border-indigo-50 rounded text-slate-500">
+                                    <span class="font-bold text-slate-700">客户体感：</span>有效避免了因病返贫。但重疾面前，客户仍需承担5000元起步费，且需忍受公立普通部恶劣的床位紧张环境。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Plan B -->
+                        <div class="bg-rose-50/50 p-4 rounded border border-rose-100 relative">
+                            <div class="absolute -top-3 -right-3 text-3xl">⭐</div>
+                            <div class="text-rose-800 font-bold mb-2">方案二：传世无忧 (全流程国际部/特需)</div>
+                            <div class="text-sm text-slate-700 mb-3 border-b border-rose-100 pb-2">
+                                <p>直接入住国际部，使用全球最先进的进口靶向药及昂贵耗材，大多为纯自费项目：</p>
+                                <ul class="list-disc pl-5 mt-1 text-slate-600">
+                                    <li>总医疗费用：<span class="font-semibold">65.0 万元</span></li>
+                                    <li>医保可报销：<span class="font-semibold text-green-600">3.0 万元</span> (国际部多数费用不报)</li>
+                                    <li>剩余自费：<span class="font-semibold text-red-600">62.0 万元</span></li>
+                                </ul>
+                            </div>
+                            <div class="text-sm text-slate-700 space-y-2">
+                                <p class="font-bold">理赔计算：</p>
+                                <p>医保(3万)已全额冲抵2万元相对免赔额！</p>
+                                <p>自费 620,000 直接全报 = <span class="font-bold text-rose-600 text-xl">保险报销 620,000元</span></p>
+                                <p class="text-xs bg-white p-2 border border-rose-50 rounded text-slate-500">
+                                    <span class="font-bold text-slate-700">客户体感：</span>天价国际部账单被保险公司<span class="font-bold text-rose-600">全额直付</span>。客户自费0元，获得了最大程度的生存希望与生命尊严。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Chart.defaults.font.family = "'Inter', 'system-ui', '-apple-system', 'sans-serif'";
+            Chart.defaults.color = '#64748b';
+
+            // Radar Chart 
+            const ctxRadar = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctxRadar, {
+                type: 'radar',
+                data: {
+                    labels: ['理赔起付门槛(越低得分越高)', '高端特需就医网络', '前沿特药与直付体验', '常规重疾保额', '基础保费性价比'],
+                    datasets: [{
+                        label: '智选逸生',
+                        data: [8, 3, 7, 6, 9], 
+                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                        borderColor: 'rgba(79, 70, 229, 1)',
+                        pointBackgroundColor: 'rgba(79, 70, 229, 1)',
+                        borderWidth: 2
+                    }, {
+                        label: '传世无忧',
+                        data: [4, 10, 10, 9, 5], 
+                        backgroundColor: 'rgba(225, 29, 72, 0.2)',
+                        borderColor: 'rgba(225, 29, 72, 1)',
+                        pointBackgroundColor: 'rgba(225, 29, 72, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: { r: { ticks: { display: false, min: 0, max: 10 } } },
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // Bar Chart
+            const ctxBar = document.getElementById('barChart').getContext('2d');
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['一般住院医疗', '重大疾病医疗'],
+                    datasets: [{
+                        label: '智选逸生',
+                        data: [200, 400],
+                        backgroundColor: 'rgba(79, 70, 229, 0.8)',
+                        borderRadius: 6
+                    }, {
+                        label: '传世无忧安心版',
+                        data: [600, 600],
+                        backgroundColor: 'rgba(225, 29, 72, 0.8)',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, title: { display: true, text: '限额(万元)' } }, x: { grid: { display: false } } },
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
